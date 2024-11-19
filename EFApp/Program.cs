@@ -17,11 +17,11 @@ internal class Program
             _context.Autos.Add(new AutoEntity
             {
                 Id = new Guid(),
-                Model = "A7",
                 Name = "Audi",
+                Model = "A7",
                 YearOfIssue = rnd.Next(2015, 2024),
                 Country = "Germany",
-                Price = 1500000
+                Price = rnd.Next(2000000, 8500000)
             });
 
             _context.SaveChanges();
