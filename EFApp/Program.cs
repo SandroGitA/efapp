@@ -8,6 +8,8 @@ internal class Program
     {
         _context = new EFAppDbContext();
         //_context.Database.EnsureCreated();
+        //Генератор случаный чисел
+        Random rnd = new Random();
 
         //В цикле добавляем автомобили в БД
         for (int i = 0; i < 100; i++)
@@ -17,7 +19,7 @@ internal class Program
                 Id = new Guid(),
                 Model = "A7",
                 Name = "Audi",
-                YearOfIssue = i,
+                YearOfIssue = rnd.Next(2015, 2024),
                 Country = "Germany",
                 Price = 1500000
             });
