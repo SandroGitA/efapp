@@ -3,6 +3,7 @@ using System;
 using EFApp.DataBase;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace EFApp.Migrations
 {
     [DbContext(typeof(EFAppDbContext))]
-    partial class EFAppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241120104856_AddOwnerEntity")]
+    partial class AddOwnerEntity
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -40,9 +43,6 @@ namespace EFApp.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<Guid>("OwnerId")
-                        .HasColumnType("uuid");
-
                     b.Property<long>("Price")
                         .HasColumnType("bigint");
 
@@ -50,8 +50,6 @@ namespace EFApp.Migrations
                         .HasColumnType("integer");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("OwnerId");
 
                     b.ToTable("Autos");
                 });
@@ -72,22 +70,6 @@ namespace EFApp.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Owners");
-                });
-
-            modelBuilder.Entity("EFApp.DataBase.AutoEntity", b =>
-                {
-                    b.HasOne("EFApp.DataBase.OwnerEntity", "Owner")
-                        .WithMany("Autos")
-                        .HasForeignKey("OwnerId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Owner");
-                });
-
-            modelBuilder.Entity("EFApp.DataBase.OwnerEntity", b =>
-                {
-                    b.Navigation("Autos");
                 });
 #pragma warning restore 612, 618
         }

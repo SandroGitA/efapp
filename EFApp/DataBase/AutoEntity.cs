@@ -8,5 +8,8 @@
         public int YearOfIssue { get; set; }
         public string Country { get; set; }
         public long Price { get; set; }
+
+        //public Guid OwnerId { get; set; }
+        //public OwnerEntity? Owner { get; set; }
     }
 }
