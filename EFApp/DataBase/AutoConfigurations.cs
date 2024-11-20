@@ -11,8 +11,12 @@ namespace EFApp.DataBase
             builder.Property(n => n.Name).IsRequired();
             builder.Property(m => m.Model).IsRequired();
             builder.Property(y => y.YearOfIssue).IsRequired();
-            builder.Property(c=>c.Country).IsRequired();
-            builder.Property(p=>p.Price).IsRequired();
+            builder.Property(c => c.Country).IsRequired();
+            builder.Property(p => p.Price).IsRequired();
+
+            //builder.HasOne(o => o.Owner)
+            //    .WithMany(a => a.Autos)
+            //    .HasForeignKey(o => o.OwnerEntityId);
         }
     }
 }

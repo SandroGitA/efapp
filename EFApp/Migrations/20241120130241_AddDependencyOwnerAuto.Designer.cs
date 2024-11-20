@@ -12,8 +12,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace EFApp.Migrations
 {
     [DbContext(typeof(EFAppDbContext))]
-    [Migration("20241119102023_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20241120130241_AddDependencyOwnerAuto")]
+    partial class AddDependencyOwnerAuto
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -43,12 +43,54 @@ namespace EFApp.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
+                    b.Property<Guid>("OwnerEntityId")
+                        .HasColumnType("uuid");
+
+                    b.Property<long>("Price")
+                        .HasColumnType("bigint");
+
                     b.Property<int>("YearOfIssue")
                         .HasColumnType("integer");
 
                     b.HasKey("Id");
 
+                    b.HasIndex("OwnerEntityId");
+
                     b.ToTable("Autos");
+                });
+
+            modelBuilder.Entity("EFApp.DataBase.OwnerEntity", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<int>("Age")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Owners");
+                });
+
+            modelBuilder.Entity("EFApp.DataBase.AutoEntity", b =>
+                {
+                    b.HasOne("EFApp.DataBase.OwnerEntity", "Owner")
+                        .WithMany("Autos")
+                        .HasForeignKey("OwnerEntityId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Owner");
+                });
+
+            modelBuilder.Entity("EFApp.DataBase.OwnerEntity", b =>
+                {
+                    b.Navigation("Autos");
                 });
 #pragma warning restore 612, 618
         }

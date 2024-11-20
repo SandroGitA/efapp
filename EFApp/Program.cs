@@ -12,7 +12,7 @@ internal class Program
         Random rnd = new Random();
 
         //В цикле добавляем автомобили в БД
-        for (int i = 0; i < 100; i++)
+        for (int i = 0; i < 7; i++)
         {
             _context.Autos.Add(new AutoEntity
             {
@@ -22,7 +22,14 @@ internal class Program
                 YearOfIssue = rnd.Next(2015, 2024),
                 Country = "Germany",
                 Price = rnd.Next(2000000, 8500000)
-            });            
+            });
+
+            _context.Owners.Add(new OwnerEntity
+            {
+                Id = new Guid(),
+                Name = "John",
+                Age = 19
+            });
 
             _context.SaveChanges();
         }

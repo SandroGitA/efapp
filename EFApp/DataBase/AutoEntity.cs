@@ -9,7 +9,7 @@
         public string Country { get; set; }
         public long Price { get; set; }
 
-        //public Guid OwnerId { get; set; }
-        //public OwnerEntity? Owner { get; set; }
+        public Guid OwnerEntityId { get; set; }
+        public OwnerEntity? Owner { get; set; }
     }
 }

@@ -40,7 +40,7 @@ namespace EFApp.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<Guid>("OwnerId")
+                    b.Property<Guid>("OwnerEntityId")
                         .HasColumnType("uuid");
 
                     b.Property<long>("Price")
@@ -51,7 +51,7 @@ namespace EFApp.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("OwnerId");
+                    b.HasIndex("OwnerEntityId");
 
                     b.ToTable("Autos");
                 });
@@ -78,7 +78,7 @@ namespace EFApp.Migrations
                 {
                     b.HasOne("EFApp.DataBase.OwnerEntity", "Owner")
                         .WithMany("Autos")
-                        .HasForeignKey("OwnerId")
+                        .HasForeignKey("OwnerEntityId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
