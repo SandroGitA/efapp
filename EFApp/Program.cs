@@ -22,7 +22,7 @@ internal class Program
                 YearOfIssue = rnd.Next(2015, 2024),
                 Country = "Germany",
                 Price = rnd.Next(2000000, 8500000)
-            });
+            });            
 
             _context.SaveChanges();
         }

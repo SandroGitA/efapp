@@ -6,7 +6,7 @@
         public string Name { get; set; }
         public string Model { get; set; }
         public int YearOfIssue { get; set; }
-        public string Country {  get; set; }
+        public string Country { get; set; }
         public long Price { get; set; }
     }
 }
