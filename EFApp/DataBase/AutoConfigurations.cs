@@ -14,9 +14,9 @@ namespace EFApp.DataBase
             builder.Property(c => c.Country).IsRequired();
             builder.Property(p => p.Price).IsRequired();
 
-            //builder.HasOne(o => o.Owner)
-            //    .WithMany(a => a.Autos)
-            //    .HasForeignKey(o => o.OwnerEntityId);
+            builder.HasOne(o => o.Owner)
+                .WithMany(a => a.Autos)
+                .HasForeignKey(o => o.OwnerEntityId);
         }
     }
 }
