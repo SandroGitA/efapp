@@ -1,4 +1,5 @@
 ﻿using EFApp.DataBase;
+using Microsoft.EntityFrameworkCore;
 
 internal class Program
 {
@@ -6,44 +7,44 @@ internal class Program
 
     private static void Main(string[] args)
     {
-        _context = new EFAppDbContext();
-        //_context.Database.EnsureCreated();
-        //Генератор случаный чисел
-        Random rndm = new Random();
-
-        //В цикле добавляем автомобили в БД
-        for (int i = 0; i < 7; i++)
+        using (_context = new EFAppDbContext())
         {
-            var owner = new OwnerEntity()
-            {
-                Id = new Guid(),
-                Name = "John",
-                Age = 19
-            };
+            //_context = new EFAppDbContext();
 
-            var auto = new AutoEntity()
+            //_context.Database.EnsureCreated();
+            //Генератор случаный чисел
+            Random rndm = new Random();
+
+            //В цикле добавляем автомобили в БД
+            for (int i = 0; i < 7; i++)
             {
-                Id = new Guid(),
-                Name = "Audi",
-                Model = "A7",
-                YearOfIssue = rndm.Next(2015, 2024),
-                Country = "Germany",
-                Price = rndm.Next(2000000, 8500000),
-                Owner = new OwnerEntity
+                var auto = new AutoEntity()
                 {
                     Id = new Guid(),
-                    Name = "John",
-                    Age = 19
-                }
-            };
+                    Name = "Audi",
+                    Model = "A7",
+                    YearOfIssue = rndm.Next(2015, 2024),
+                    Country = "Germany",
+                    Price = rndm.Next(2000000, 8500000),
 
-            //_context.Owners.Add(owner);
-            _context.Autos.Add(auto);
+                    Owner = new OwnerEntity
+                    {
+                        Id = new Guid(),
+                        Name = "John",
+                        Age = rndm.Next(18, 65)
+                    }
+                };
 
-            _context.SaveChanges();
+                //Получение данных из связанной таблицы с помощью метода Include
+                var autos = _context.Autos.Include(o => o.Owner).ToList();
+
+                _context.Autos.Add(auto);
+
+                _context.SaveChanges();
+            }
+
+            Console.WriteLine("Нажмите для выхода");
+            Console.ReadKey();
         }
-
-        Console.WriteLine("Нажмите для выхода");
-        Console.ReadKey();
     }
 }
